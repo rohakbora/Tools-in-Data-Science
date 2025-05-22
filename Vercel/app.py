@@ -8,7 +8,7 @@ with open("marks.json", "r") as f:
     raw_data = json.load(f)
 marks_dict = {entry["name"]: entry["marks"] for entry in raw_data}
 
-@app.route("/", methods=["GET"])
+@app.route("/api", methods=["GET"])
 def get_marks():
     names = request.args.getlist("name")
     results = [marks_dict.get(name) for name in names]
