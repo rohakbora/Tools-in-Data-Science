@@ -1,12 +1,14 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import json
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
-# Load JSON data once on startup into a dictionary
+# Load student marks into a dictionary
 with open("marks.json", "r") as f:
-    raw_data = json.load(f)
-marks_dict = {entry["name"]: entry["marks"] for entry in raw_data}
+    data = json.load(f)
+marks_dict = {entry["name"]: entry["marks"] for entry in data}
 
 @app.route("/api", methods=["GET"])
 def get_marks():
