@@ -18,7 +18,7 @@ students_data = []
 @app.on_event("startup")
 def load_data():
     global students_data
-    csv_path = os.path.join(os.path.dirname(__file__), "students.csv")
+    csv_path = os.path.join(os.path.dirname(__file__), "..", "students.csv")
     with open(csv_path, newline="", encoding="utf-8") as csvfile:
         reader = csv.DictReader(csvfile)
         students_data = [
@@ -33,7 +33,3 @@ def get_students(class_: Optional[List[str]] = Query(None, alias="class")):
     else:
         filtered = students_data
     return {"students": filtered}
-
-# Vercel compatibility
-from mangum import Mangum
-handler = Mangum(app)
