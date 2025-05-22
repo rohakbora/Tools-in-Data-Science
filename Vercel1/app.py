@@ -27,7 +27,8 @@ def load_data():
 @app.get("/api")
 def get_students(class_: Optional[List[str]] = Query(None, alias="class")):
     if class_:
-        filtered = [student for student in students_data if student["class"] in class_]
+        class_lower = {c.lower() for c in class_}
+        filtered = [student for student in students_data if student["class"].lower() in class_lower]
     else:
         filtered = students_data
     return {"students": filtered}
