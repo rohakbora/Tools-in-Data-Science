@@ -1,0 +1,27 @@
+name: Daily ISS Tracker
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs every day at 00:00 UTC
+  workflow_dispatch:     # Manual trigger for testing
+
+jobs:
+  fetch_iss_data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fetch ISS data
+        run: |
+          mkdir -p data
+          curl http://api.open-notify.org/iss-now.json -o "data/$(date +%F).json"
+
+      - name: Commit and push data
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add data/
+          git commit -m "Add ISS data for $(date +%F)" || echo "No changes to commit"
+          git push
