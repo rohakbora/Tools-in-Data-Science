@@ -17,7 +17,6 @@ jobs:
 
       - name: Make a daily update
         run: |
-          echo "Last run: $(date -u)" > last-run.txt
           git config user.name "github-actions[bot]"
           git config user.email "borarohak@gmail.com"
           git add last-run.txt
