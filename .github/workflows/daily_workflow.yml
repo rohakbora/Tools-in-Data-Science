@@ -15,7 +15,7 @@ jobs:
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "23f1000897@ds.study.iitm.ac.in"
+          git config user.email "borarohak@gmail.com"
           git add .
           git commit -m "Daily commit - $(date -u)"
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }} HEAD:main
