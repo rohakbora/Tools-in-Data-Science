@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-
+      - name: 23f1000897@ds.study.iitm.ac.in
       - name: Make a daily update
         run: |
           echo "Last run: $(date -u)" > last-run.txt
@@ -20,4 +20,3 @@ jobs:
           git add .
           git commit -m "Daily commit - $(date -u)"
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }} HEAD:main
-      
