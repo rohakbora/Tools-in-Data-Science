@@ -18,7 +18,7 @@ jobs:
       - name: Fetch ISS data
         run: |
           mkdir -p data
-          curl http://api.open-notify.org/iss-now.json -o "data/$(date +%F).json"
+          curl http://api.open-notify.org/iss-now.json | jq -c '.' >> "data/$(date +%F).json"
 
       - name: Commit and push data
         env:
