@@ -15,10 +15,10 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Fetch ISS data
+      - name: Append ISS data to daily file
         run: |
-          mkdir -p data
           curl http://api.open-notify.org/iss-now.json | jq -c '.' >> "data/$(date +%F).json"
+          echo >> "data/$(date +%F).json"
 
       - name: Commit and push data
         env:
