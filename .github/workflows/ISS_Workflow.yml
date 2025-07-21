@@ -2,8 +2,8 @@ name: Daily ISS Tracker
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs every day at 00:00 UTC
-  workflow_dispatch:     # Manual trigger for testing
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   fetch_iss_data:
@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
       - name: Fetch ISS data
         run: |
