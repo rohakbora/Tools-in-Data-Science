@@ -1,168 +1,69 @@
----
+import marimo as mo
 
-marp: true
-math: katex
-paginate: true
-headingDivider: 2
-size: 16:9
-color: #e5e7eb
-backgroundColor: #0b1220
-style: |
-section {
-padding: 56px;
-}
-footer {
-font-size: 0.8rem;
-color: #9ca3af;
-}
-/\* Use the theme by name */
-section.product-docs h1, section.product-docs h2 {
-letter-spacing: 0.2px;
-}
-section.product-docs strong {
-color: #8b5cf6; /* accent \*/
-}
-section.product-docs .pill {
-display: inline-block;
-padding: 0.25rem 0.6rem;
-border: 1px solid #374151;
-border-radius: 999px;
-font-size: 0.9rem;
-}
+# Author: [23f1000897@ds.study.iitm.ac.in](mailto:23f1000897@ds.study.iitm.ac.in)
 
-# Use a custom Marp theme
+# This Marimo notebook demonstrates interactive data analysis with variable dependencies.
 
-# (Declared below via `<style>` with `@theme`)
+# %% \[markdown]
 
-theme: product-docs
-footer: 'Page \${page} / \${total}'
------------------------------------
+# # Interactive Data Analysis
 
-<!-- _class: product-docs lead -->
+# This notebook explores the relationship between variables in a dataset.
 
-# Product Documentation
+# It uses widgets for interactivity and dynamic markdown for self-documentation.
 
-### Built with **Marp** for maintainability
+# %%
 
-* Version-controlled Markdown → HTML / PDF / PPTX
-* Developer-friendly: reviews & diffs in PRs
-* Presenter-friendly: live speaker notes
+import numpy as np
+import matplotlib.pyplot as plt
 
-**Author:** [23f1000897@ds.study.iitm.ac.in](mailto:23f1000897@ds.study.iitm.ac.in)
+# Define synthetic dataset
 
----
+def generate\_data(n):
+x = np.linspace(0, 10, n)
+y = np.sin(x) + np.random.normal(0, 0.1, n)
+return x, y
 
-<!-- _class: product-docs -->
+# Initial dataset
 
-## Why Marp for Docs Presentations?
+data\_points = 100
+x, y = generate\_data(data\_points)
 
-* Single source of truth: `slides.md` in repo
-* Convert via CLI: `marp slides.md --html --pdf`
-* Theming via CSS; brand-ready
-* Works with GitHub Pages
+plt.scatter(x, y, alpha=0.6)
+plt.title("Synthetic Data")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.show()
 
-**Tip:** Add a CI job to export HTML/PDF on every push.
+# %%
 
----
+# Interactive slider widget to control number of data points
 
-<!-- _class: product-docs -->
+num\_points = mo.ui.slider(50, 500, value=100, label="Number of Data Points")
+num\_points
 
-## Background Image Slide
+# %%
 
-![bg](assets/product-hero.jpg)
+# Regenerate dataset based on slider state (dependency on num\_points)
 
-> Showcase the product UI or an architectural diagram as the background.
+x, y = generate\_data(num\_points.value)
 
----
+plt.scatter(x, y, alpha=0.6, c="tab\:blue")
+plt.title(f"Synthetic Data with n={num\_points.value}")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.show()
 
-<!-- _class: product-docs -->
+# %% \[markdown]
 
-## Algorithmic Complexity (Math)
+# Dynamic markdown output based on widget state
 
-We analyze the end-to-end pipeline complexity:
+mo.md(f"### Currently displaying dataset with **{num\_points.value}** points")
 
-$T(n) = T_1(n) + T_2(n) = O(n \log n) + O(n) = O(n \log n)$
+# Comments:
 
-For amortized cost of batched updates:
+# - The slider `num_points` controls dataset size.
 
-$\bar{c} = \frac{\sum_{i=1}^{m} c_i}{m}$
+# - Updating the slider triggers regeneration of x, y (dependency across cells).
 
----
-
-<!-- _class: product-docs -->
-
-## Code Snippet (fenced)
-
-```ts
-// Minimal typed API client
-export async function getUser(id: string) {
-  const r = await fetch(`/api/users/${id}`);
-  if (!r.ok) throw new Error(`HTTP ${r.status}`);
-  return (await r.json()) as { id: string; name: string };
-}
-```
-
----
-
-<!-- _class: product-docs -->
-
-## Release Packaging
-
-* **CLI**: `marp slides.md -o dist/index.html`
-* **PDF**: `marp slides.md -o dist/slides.pdf`
-* **PPTX**: `marp slides.md -o dist/slides.pptx`
-* **Pages**: publish `dist/` to GitHub Pages
-
-**Footnote:** Keep `assets/` checked in so images resolve.
-
----
-
-<!-- _class: product-docs -->
-
-## Contact
-
-**Technical Writer:** [23f1000897@ds.study.iitm.ac.in](mailto:23f1000897@ds.study.iitm.ac.in)
-
-* Repo contains `slides.md`, `theme.css` (inlined below), and `assets/`.
-* Use PRs for copy reviews and versioning.
-
----
-
-<!--
-  Custom theme definition embedded in this Markdown
-  You can also extract this into `theme-product-docs.css` and reference it via `--theme` CLI flag.
--->
-
-<style>
-/* @theme product-docs */
-@import "uncover";
-
-:root {
-  --background-color: #0b1220;
-  --foreground-color: #e5e7eb;
-  --accent: #8b5cf6;
-  --muted: #9ca3af;
-  --slide-border: #111827;
-}
-
-section {
-  /* Subtle border and elevated look */
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-  border: 1px solid var(--slide-border);
-}
-
-section h1, section h2, section h3 {
-  color: var(--foreground-color);
-}
-
-section a { color: var(--accent); }
-
-section.lead h1 {
-  font-size: 2.6em;
-}
-
-/* Page number styling (works with footer paginate) */
-footer {
-  letter-spacing: .02em;
-}
-</style>
+# - Dynamic markdown reflects the state of the widget.
