@@ -1,69 +1,193 @@
-import marimo as mo
+---
 
-# Author: [23f1000897@ds.study.iitm.ac.in](mailto:23f1000897@ds.study.iitm.ac.in)
+marp: true
+title: Product Documentation — Marp Demo
+author: Rahul Bora — [23f1000897@ds.study.iitm.ac.in](mailto:23f1000897@ds.study.iitm.ac.in)
+theme: custom-docs
+paginate: true
+footer: "Product Docs — \$page / \$pages"
+-----------------------------------------
 
-# This Marimo notebook demonstrates interactive data analysis with variable dependencies.
+<style>
+/* Custom Marp theme defined inline */
+@theme custom-docs {
+  section {
+    background: #0b1220;
+    color: #e6edf3;
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  }
+  h1, h2, h3 { color: #93c5fd; }
+  a { color: #60a5fa; }
+  code { background: rgba(255,255,255,0.08); padding: 0.2em 0.4em; border-radius: 6px; }
+  pre code { background: transparent; }
+  blockquote { color: #a5b4fc; border-left: 4px solid #334155; padding-left: 12px; }
+  footer { color: #9aa4b2; }
+}
+</style>
 
-# %% \[markdown]
+<!-- _class: lead -->
 
-# # Interactive Data Analysis
+# Product Documentation
 
-# This notebook explores the relationship between variables in a dataset.
+A maintainable, version-controlled presentation built with **Marp**.
 
-# It uses widgets for interactivity and dynamic markdown for self-documentation.
+**Author:** Rahul Bora
+**Email:** [23f1000897@ds.study.iitm.ac.in](mailto:23f1000897@ds.study.iitm.ac.in)
 
-# %%
+---
 
-import numpy as np
-import matplotlib.pyplot as plt
+<!-- A slide with a full-bleed background image -->
 
-# Define synthetic dataset
+![bg cover](images/hero.jpg)
 
-def generate\_data(n):
-x = np.linspace(0, 10, n)
-y = np.sin(x) + np.random.normal(0, 0.1, n)
-return x, y
+# Overview
 
-# Initial dataset
+Ship consistent docs across formats: **HTML**, **PDF**, **PPTX**.
 
-data\_points = 100
-x, y = generate\_data(data\_points)
+---
 
-plt.scatter(x, y, alpha=0.6)
-plt.title("Synthetic Data")
-plt.xlabel("x")
-plt.ylabel("y")
-plt.show()
+## Repository Layout
 
-# %%
+```
+product-docs/
+├─ slides.md           # This file
+├─ images/             # Assets used by slides
+├─ themes/             # Optional external themes
+└─ package.json        # Build scripts
+```
 
-# Interactive slider widget to control number of data points
+* Maintain in Git for review & history.
+* Export via CLI or VS Code Marp extension.
 
-num\_points = mo.ui.slider(50, 500, value=100, label="Number of Data Points")
-num\_points
+---
 
-# %%
+<!-- _header: **Install & Build** -->
 
-# Regenerate dataset based on slider state (dependency on num\_points)
+## Tooling
 
-x, y = generate\_data(num\_points.value)
+```bash
+# Local dev server
+npx @marp-team/marp-cli -s .
 
-plt.scatter(x, y, alpha=0.6, c="tab\:blue")
-plt.title(f"Synthetic Data with n={num\_points.value}")
-plt.xlabel("x")
-plt.ylabel("y")
-plt.show()
+# HTML for web
+marp slides.md -o dist/slides.html
 
-# %% \[markdown]
+# PDF (allow local assets)
+marp slides.md --pdf --allow-local-files
 
-# Dynamic markdown output based on widget state
+# PowerPoint
+marp slides.md --pptx
+```
 
-mo.md(f"### Currently displaying dataset with **{num\_points.value}** points")
+> Tip: Add npm scripts (`start`, `build`, `pdf`, `pptx`) for one-liners.
 
-# Comments:
+---
 
-# - The slider `num_points` controls dataset size.
+<!-- _backgroundColor: #111827 -->
 
-# - Updating the slider triggers regeneration of x, y (dependency across cells).
+<!-- _color: #fca5a5 -->
 
-# - Dynamic markdown reflects the state of the widget.
+## Versioning Strategy
+
+* Treat slides like code (PRs, reviews, CI).
+* Use semantic slide sections for stable anchors.
+* Keep image assets small; prefer SVG when possible.
+
+---
+
+## Feature Specs (Example)
+
+**Goal:** Document API rate limiting behavior.
+
+```json
+{
+  "limit": 1200,
+  "window": "1m",
+  "burst": 100
+}
+```
+
+* Include **sample requests**, **responses**, and **edge cases**.
+* Link to changelog for backwards-incompatible updates.
+
+---
+
+## Algorithmic Complexity (Math)
+
+We analyze the indexing algorithm:
+
+Inline: \$O(n \log n)\$ for sort-and-merge.
+
+Block math:
+
+$$
+T(n) = a\,T\!\left(\frac{n}{b}\right) + f(n)\\
+T(n) = 2\,T\!\left(\frac{n}{2}\right) + n \;\Rightarrow\; T(n) = O(n\log n)
+$$
+
+---
+
+## Theming & Branding
+
+* Using the **custom-docs** theme defined inline via `@theme`.
+* Override colors, typography, and component styles.
+
+```css
+/* themes/custom.css (optional external theme) */
+section { font-size: calc(1.1vw + 1.1vh); }
+```
+
+---
+
+## Background Variants
+
+![bg fit](images/diagram.png)
+
+* Use `![bg]`, `![bg fit]`, or `![bg cover]` for imagery.
+* Keep high-contrast text for accessibility.
+
+---
+
+## Code Snippets
+
+```python
+from time import perf_counter
+
+def benchmark(fn, *args, **kwargs):
+    t0 = perf_counter(); result = fn(*args, **kwargs); t1 = perf_counter()
+    return result, t1 - t0
+```
+
+```javascript
+console.log("Build version:", process.env.GIT_COMMIT_SHA)
+```
+
+---
+
+## Directives Showcase
+
+<!-- _class: lead -->
+
+* `_class: lead` for opening emphasis
+* `_backgroundColor` and `_color` per-slide styling
+* `_header` / `_footer` to add context
+
+<!-- _footer: "Support: 23f1000897@ds.study.iitm.ac.in" -->
+
+---
+
+## Export Targets
+
+* **HTML** for GitHub Pages
+* **PDF** for formal review and archival
+* **PPTX** for conference uploads
+
+> Use CI to auto-build outputs on `main`.
+
+---
+
+## Thanks!
+
+Docs contact: **[23f1000897@ds.study.iitm.ac.in](mailto:23f1000897@ds.study.iitm.ac.in)**
+
+Questions? File an issue in the repo.
