@@ -5,8 +5,8 @@ title: Product Documentation — Marp Demo
 author: Rahul Bora — [23f1000897@ds.study.iitm.ac.in](mailto:23f1000897@ds.study.iitm.ac.in)
 theme: custom-docs
 paginate: true
-footer: "Product Docs — \$page / \$pages"
------------------------------------------
+footer: Product Docs — \$page / \$pages
+---------------------------------------
 
 <style>
 /* Custom Marp theme defined inline */
@@ -61,7 +61,7 @@ product-docs/
 
 ---
 
-<!-- _header: **Install & Build** -->
+<!-- _header: Install & Build -->
 
 ## Tooling
 
@@ -121,8 +121,8 @@ Inline: \$O(n \log n)\$ for sort-and-merge.
 Block math:
 
 $$
-T(n) = a\,T\!\left(\frac{n}{b}\right) + f(n)\\
-T(n) = 2\,T\!\left(\frac{n}{2}\right) + n \;\Rightarrow\; T(n) = O(n\log n)
+T(n) = a T\left(\frac{n}{b}\right) + f(n) \\
+T(n) = 2 T\left(\frac{n}{2}\right) + n \;\Rightarrow\; T(n) = O(n \\log n)
 $$
 
 ---
@@ -172,7 +172,7 @@ console.log("Build version:", process.env.GIT_COMMIT_SHA)
 * `_backgroundColor` and `_color` per-slide styling
 * `_header` / `_footer` to add context
 
-<!-- _footer: "Support: 23f1000897@ds.study.iitm.ac.in" -->
+<!-- _footer: Support: 23f1000897@ds.study.iitm.ac.in -->
 
 ---
 
